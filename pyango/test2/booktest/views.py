@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect   #導入重定向函數
-from booktest.models import BookInfo
+from booktest.models import BookInfo, AreaInfo
 from datetime import date
 from django.http import HttpResponse,HttpResponseRedirect
 # Create your views here.
@@ -33,6 +33,17 @@ def delete(request, bid):
     # 3.重定向，讓瀏覽器訪問/index
     # return HttpResponseRedirect('/index')
     return redirect('/index')
+
+def areas(request):
+    '''獲取廣州市的上級地區和下級地區'''
+    # 1.獲取廣州市的信息
+    area = AreaInfo.objects.get(atitle='广州市')
+    # 2.查詢廣州市的上級地區
+    parent = area.aParent
+    # 3.查詢廣州市的下級地區
+    children = area.areainfo_set.all()
+    # 使用模板
+    return render(request, 'booktest/areas.html', {'area':area, 'parent':parent, 'children':children})
 
 
 

@@ -21,7 +21,7 @@ class BookInfo(models.Model):
 
 # 多類
 class HumanInfo(models.Model):
-    '''人物模型類'''
+    # 人物模型類
     # 人物名
     hname = models.CharField(max_length=20)
     # 性別
@@ -58,7 +58,7 @@ class BooktestHumaninfo(models.Model):
         managed = False
         db_table = 'booktest_humaninfo'
 
-
+'''
 #新聞類型類
 class NewsType(models.Model):
     #類型名
@@ -97,6 +97,14 @@ class EmployeeDetailInfo(models.Model):
     # 教育經歷
     # 關係屬性，代表員工的基本信息
     # employee_basic = models.OneToOneField('EmployeeBasicInfo')
+'''
+
+class AreaInfo(models.Model):
+    '''地區模型類'''
+    # 地區名稱
+    atitle = models.CharField(max_length=20)
+    # 關係屬性，代表當前地區的父級地區
+    aParent = models.ForeignKey('self', null=True, blank=True,  on_delete=models.SET_NULL)
 
 
 
