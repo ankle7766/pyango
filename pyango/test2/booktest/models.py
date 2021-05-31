@@ -2,6 +2,33 @@ from django.db import models
 
 # Create your models here.
 
+class BookInfoManager(models.Manager):
+    '''圖書模型管理器類'''
+    # 1.改變查詢的結果集
+    def all(self):
+        # 1.調用父類的all，獲取所有數據
+        books = super().all()  # QuerySet
+        # 2.對數據進行過濾
+        books = books.filter(isDelete=False)
+        # 3.返回books
+        return books
+
+    # 2.封裝函數:操握模型類對應的數據表(曾刪改查)
+    def create_book(self, btitle, bpub_date):
+        # 1.創建一個圖書對象
+        # 獲取slef所在的模型類
+        model_class = self.model
+        book = model_class()
+        book.btitle = btitle
+        book.bpub_date = bpub_date
+        # 2.保存進數據庫
+        book.save()
+        # 3.返回book
+        return book
+
+
+
+
 # 一類
 class BookInfo(models.Model):
     '''圖書模型類'''
@@ -17,7 +44,18 @@ class BookInfo(models.Model):
     bcomment = models.IntegerField(default=0)
     # 刪除標記
     isDelete = models.BooleanField(default=False)
+    objects = BookInfoManager() #自定義一個BookInfoManager類的對象
 
+    # @classmethod
+    # def create_book(cls, btitle, bpub_date):
+    #     # 1.創建一個圖書對象
+    #     obj = cls()
+    #     obj.btitle = btitle
+    #     obj.bpub_date = bpub_date
+    #     # 2.保存進數據庫
+    #     obj.save()
+    #     # 3.返回obj
+    #     return obj
 
 # 多類
 class HumanInfo(models.Model):
