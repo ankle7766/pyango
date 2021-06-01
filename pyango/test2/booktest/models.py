@@ -13,7 +13,7 @@ class BookInfoManager(models.Manager):
         # 3.返回books
         return books
 
-    # 2.封裝函數:操握模型類對應的數據表(曾刪改查)
+    # 2.封裝函數:操做模型類對應的數據表(增刪改查)
     def create_book(self, btitle, bpub_date):
         # 1.創建一個圖書對象
         # 獲取slef所在的模型類
@@ -56,6 +56,9 @@ class BookInfo(models.Model):
     #     obj.save()
     #     # 3.返回obj
     #     return obj
+
+    class Meta:
+        db_table = 'bookinfo'  #指定模型類對應的表明
 
 # 多類
 class HumanInfo(models.Model):
@@ -144,7 +147,8 @@ class AreaInfo(models.Model):
     # 關係屬性，代表當前地區的父級地區
     aParent = models.ForeignKey('self', null=True, blank=True,  on_delete=models.SET_NULL)
 
-
+    # class Meta:
+    #      db_table = 'areas'
 
 
 
