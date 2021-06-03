@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 # request就是HttpResponse類型對象
 # request包含瀏覽器的請求信息
@@ -16,8 +16,31 @@ def login(request):
 
 def login_check(request):
     '''登錄校驗試圖'''
+    # request.POST 保存的是POST方式的提交參數 QueryDict
+    # request.GET 保存的是GET方式的提交參數
+
     # 1.獲取提交的用戶名和密碼
+    username = request.POST.get('username')
+    password = request.POST.get('password')
 
     # 2.進行登錄的校驗
+    # 實際開發時:根據用戶明和密碼查找數據庫
+    # 模擬: ankle 123
+    if username == 'ankle' and password == '123':
+        # 用戶明和密碼正確，跳轉到首頁
+        return redirect('/index')
+    else:
+        # 用戶明和密碼錯誤，跳轉到登錄頁面
+        return redirect('/login')
 
-    # 3.返回應答
+
+# /test_ajax
+def ajax_test(request):
+    '''顯示ajax頁面'''
+    return render(request, 'booktest/test_ajax.html')
+
+
+def ajax_handle(request):
+    '''ajax請求處理'''
+    # 返回的json數據{'res':1}
+    return JsonResponse({'res':1})
