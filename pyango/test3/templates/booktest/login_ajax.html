@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax登陸頁面</title>
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $('#btnLogin').click(function () {
+                // 1.獲取用戶名和密碼
+                username = $('#username').val()
+                password = $('#password').val()
+                // 2.發起ajax請求，/login_ajax_check
+                $.ajax({
+                    'url':'/login_ajax_check',
+                    'type':'post',
+                    'data':{'username':username, 'password':password},
+                    'dataType':'json'
+                }).success(function (data){
+                    // 登錄成功 {'res':1}
+                    // 登錄失敗 {'res':0}
+                    if (data.res == 0){
+                        $('#errmsg').show().html('用戶名或密碼錯誤')
+                    }
+                    else(
+                        // 跳轉到首頁
+                        location.href = '/index'
+                    )
+                })
+            })
+        })
+
+    </script>
+    <style>
+        #errmsg{
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div>
+    用戶名:<input type="text" id="username"><br/>
+    密碼:<input type="passqord" id="password"><br/>
+    <input type="button" id="btnLogin" value="登錄">
+    <div id="errmsg"></div>
+</div>
+</body>
+</html>

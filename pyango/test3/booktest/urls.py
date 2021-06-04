@@ -10,4 +10,6 @@ urlpatterns = [
 
     url(r'^test_ajax$', views.ajax_test), # 顯示ajax頁面
     url(r'^ajax_handle$', views.ajax_handle), # ajax處理
+    url(r'^login_ajax$', views.login_ajax), # 顯示ajax登錄頁面
+    url(r'^login_ajax_check$', views.login_ajax_check), # 顯示ajax登錄校驗
 ]

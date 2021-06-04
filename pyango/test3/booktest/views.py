@@ -44,3 +44,23 @@ def ajax_handle(request):
     '''ajax請求處理'''
     # 返回的json數據{'res':1}
     return JsonResponse({'res':1})
+
+# /login_ajax
+def login_ajax(request):
+    '''顯示ajax登錄頁面'''
+    return render(request, 'booktest/login_ajax.html')
+
+# /login_ajax_check
+def login_ajax_check(request):
+    '''ajax登錄校驗'''
+    # 1.獲取用戶名和密碼
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    # 2.進行校驗，返回json數據
+    if username == 'ankle' and password == '123':
+        # 用戶名密碼正確
+        return JsonResponse({'res':1})
+        # return redirect('/index') ajax請求在後台，不要返回頁面或者重定向
+    else:
+        # 用戶名或密碼錯誤
+        return JsonResponse({'res':0})
